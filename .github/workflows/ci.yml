@@ -78,10 +78,15 @@ jobs:
         run: npm test
 
       - name: SonarQube Scan
+        if: ${{ secrets.SONAR_TOKEN != '' }}
         uses: SonarSource/sonarqube-scan-action@master
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+      - name: SonarQube Scan Skipped
+        if: ${{ secrets.SONAR_TOKEN == '' }}
+        run: echo "⚠️ SonarQube scan skipped - SONAR_TOKEN not configured in repository secrets"
 
   k6-smoke-test:
     name: k6 Smoke Test
