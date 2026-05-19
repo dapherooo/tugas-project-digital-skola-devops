@@ -35,7 +35,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          pytest tests/ -v --tb=short
+          PYTHONPATH=${{ github.workspace }} pytest tests/ -v --tb=short
 
   sast_bandit:
     name: SAST (Bandit)
